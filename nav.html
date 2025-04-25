@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="color-scheme" content="light only">
+    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <title>Главная</title>
+</head>
+
+
+
+<style>
+    .wrapper a {
+        font-size: 30px;
+        text-transform: capitalize;
+    }
+
+    .wrapper button {
+        margin-bottom: 25px;
+        width: 300px;
+        height: 45px;
+    }
+</style>
+
+<body class="m-page">
+
+    <div class="wrapper" style="padding: 50px;">
+        <a href="index.html" style="display: block; margin-bottom: 20px;">
+            Главная
+        </a>
+
+
+
+
+        <button style="border: 2px solid #000;margin-bottom: 20px;" data-bs-toggle="modal" data-bs-target="#quickOrder">
+            Быстрый заказ
+        </button>
+
+
+        <code>
+
+            @@include
+            ('components/page-blocks/_filter-slider.html',{ <br>
+            "start1":"0", <br>
+            "start2":"30000", <br>
+            "min":"1000", <br>
+            "max":"100000", <br>
+            })
+
+        </code>
+    </div>
+
+
+
+
+
+
+
+    <div class="modal" id="Modal">
+        <div class="modal__bg modal-bg _close-modal"></div>
+        <div class="modal__dialog">
+            <div class="modal__top">
+                <div class="text32 medium-text">
+                    Title
+                </div>
+                <button class="close-btn _close-modal">
+                    <img src="img/close.svg" alt="">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--  -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/main.min.js"></script>
+
+</body>
+
+</html>

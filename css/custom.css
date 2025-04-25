@@ -1,0 +1,60 @@
+.editor-component {
+  height: 550px;
+}
+
+.editor-wrapper {
+  position: relative;
+}
+
+.ql-container,
+.ql-toolbar {
+  border: 2px solid #e3e7eb !important;
+}
+
+.ql-toolbar {
+  border-bottom: none !important;
+  border-radius: 12px 12px 0 0;
+}
+
+.ql-container {
+  border-radius: 0 0 12px 12px;
+}
+
+.charCount {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ql-snow .ql-tooltip[data-mode="link"]::before {
+  content: "Ссылка:";
+}
+
+.ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+  content: "Сохранить";
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="small"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="small"]::before {
+  content: "Маленький";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item::before {
+  content: "Нормальный";
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="large"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="large"]::before {
+  content: "Большой";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="huge"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="huge"]::before {
+  content: "Огромный";
+}
+
+.ql-snow .ql-picker.ql-size {
+  width: 110px;
+}
