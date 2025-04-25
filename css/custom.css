@@ -5,7 +5,27 @@
 .editor-wrapper {
   position: relative;
 }
+.editor-wrapper.err .ql-toolbar,
+.editor-wrapper.err .ql-container {
+  border-color: red !important;
+}
+.err-message {
+  font-size: 14px;
+  margin: 10px 0;
+  font-weight: 600;
+  color: red;
+  display: none;
+}
+.err .err-message {
+  display: block;
+}
 
+.fg.err .data-field {
+  border-color: red;
+}
+.fg.err .data-field::placeholder {
+  color: red;
+}
 .ql-container,
 .ql-toolbar {
   border: 2px solid #e3e7eb !important;
@@ -27,6 +47,10 @@
   color: #000;
   font-size: 14px;
   font-weight: 600;
+}
+
+.req-page__btn {
+  flex: 0 0 50%;
 }
 
 .ql-snow .ql-tooltip[data-mode="link"]::before {
