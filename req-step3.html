@@ -7,12 +7,10 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="color-scheme" content="light only">
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
-    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/7.6.1/imask.min.js"
-        integrity="sha512-+3RJc0aLDkj0plGNnrqlTwCCyMmDCV1fSYqXw4m+OczX09Pas5A/U+V3pFwrSyoC1svzDy40Q9RU/85yb/7D2A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="./css/quill.snow.css" />
     <link rel="stylesheet" href="css/style.min.css">
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <link rel="stylesheet" href="css/custom.css">
     <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
     <title>Новая заявка</title>
@@ -90,19 +88,20 @@
                                 </div>
                                 <div class="info-group__fields">
                                     <div class="fg">
-                                        <input class="data-field" type="text" name="company-name" required
+                                        <input class="data-field" value="" type="text" name="company-name" required
                                             placeholder="Название компании *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
                                     </div>
                                     <div class="fg">
-                                        <input class="data-field" type="text" data-field-type="number"
+                                        <input class="data-field" value="" type="text" data-field-type="number"
                                             name="conpany-personal-count" required
                                             placeholder="Численность персонала компании *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
                                     </div>
                                     <div class="fg">
-                                        <input class="data-field" type="text" name="regions-of-company-presence"
-                                            required placeholder="Регионы присутствия компании *">
+                                        <input class="data-field" value="" type="text"
+                                            name="regions-of-company-presence" required
+                                            placeholder="Регионы присутствия компании *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
 
                                     </div>
@@ -132,26 +131,26 @@
                                 </div>
                                 <div class="info-group__fields">
                                     <div class="fg">
-                                        <input class="data-field" type="text" required name="project-name"
+                                        <input class="data-field" value="" type="text" required name="project-name"
                                             placeholder="Название проекта *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
 
                                     </div>
                                     <div class="fg">
-                                        <input class="data-field" type="text" data-field-type="number" required
+                                        <input class="data-field" value="" type="text" data-field-type="number" required
                                             name="project-persons-count"
                                             placeholder="Команда проекта (кол-во сотрудников) *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
 
                                     </div>
                                     <div class="fg">
-                                        <input class="data-field" type="text" required name="project-time"
+                                        <input class="data-field" value="" type="text" required name="project-time"
                                             placeholder="Время осуществления проекта *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
 
                                     </div>
                                     <div class="fg">
-                                        <input class="data-field" type="text" data-field-type="number" required
+                                        <input class="data-field" value="" type="text" data-field-type="number" required
                                             name="budget" placeholder="Бюджет *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
 
@@ -180,18 +179,19 @@
                                 </div>
                                 <div class="info-group__fields">
                                     <div class="fg">
-                                        <input class="data-field" type="text" required placeholder="Лидер проекта *">
+                                        <input class="data-field" value="" type="text" required
+                                            placeholder="Лидер проекта *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
 
                                     </div>
                                     <div class="fg">
-                                        <input class="data-field" type="tel" required name="phone"
+                                        <input class="data-field" value="" type="tel" required name="phone"
                                             placeholder="Мобильный телефон для связи по проекту и защитам *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
 
                                     </div>
                                     <div class="fg">
-                                        <input class="data-field" type="email" name="email" required
+                                        <input class="data-field" value="" type="email" name="email" required
                                             placeholder="E-mail *">
                                         <div class="err-message">Необходимо заполнить это поле</div>
 
@@ -221,12 +221,11 @@
                                 </div>
                                 <div class="editor">
                                     <div class="editor-wrapper">
-                                        <div class="editor-component" name="project-description"></div>
+                                        <div class="editor-component" name="project-description" data-req="true"></div>
                                         <div class="charCount">0 / 2000</div>
                                         <div class="err-message">Необходимо заполнить это поле</div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="info-group__col2">
                                 <div class="hint">
@@ -252,7 +251,7 @@
                                 <div class="editor">
                                     <div class="editor-wrapper">
 
-                                        <div class="editor-component" name="project-uniqueness"></div>
+                                        <div class="editor-component" name="project-uniqueness" data-req="false"></div>
                                         <div class="charCount">0 / 2000</div>
                                         <div class="err-message">Необходимо заполнить это поле</div>
                                     </div>
@@ -292,7 +291,7 @@
                                 <div class="editor">
                                     <div class="editor-wrapper">
 
-                                        <div class="editor-component" name="project-reason"></div>
+                                        <div class="editor-component" name="project-reason" data-req="true"></div>
                                         <div class="charCount">0 / 2000</div>
                                         <div class="err-message">Необходимо заполнить это поле</div>
                                     </div>
@@ -328,7 +327,7 @@
                                 <div class="editor">
                                     <div class="editor-wrapper">
 
-                                        <div class="editor-component" name="project-target"></div>
+                                        <div class="editor-component" name="project-target" data-req="true"></div>
                                         <div class="charCount">0 / 2000</div>
                                         <div class="err-message">Необходимо заполнить это поле</div>
                                     </div>
@@ -368,7 +367,7 @@
                                 <div class="editor">
                                     <div class="editor-wrapper">
 
-                                        <div class="editor-component" name="project-steps"></div>
+                                        <div class="editor-component" name="project-steps" data-req="true"></div>
                                         <div class="charCount">0 / 2000</div>
                                         <div class="err-message">Необходимо заполнить это поле</div>
                                     </div>
@@ -413,7 +412,7 @@
                                 <div class="editor">
                                     <div class="editor-wrapper">
 
-                                        <div class="editor-component" name="project-results"></div>
+                                        <div class="editor-component" name="project-results" data-req="true"></div>
                                         <div class="charCount">0 / 2000</div>
                                         <div class="err-message">Необходимо заполнить это поле</div>
                                     </div>
@@ -459,8 +458,8 @@
                                 </div>
 
                                 <div class="file-input">
-                                    <input type="file">
-                                    <div class="file-input__wrap">
+                                    <div class="file-input__wrap" data-dropzone-item data-accepted-files=".pdf"
+                                        data-max-files-count="3" data-max-total-size="15">
                                         <div class="file-input__inner">
                                             <img src="img/upload.svg" alt="" class="file-input__img">
                                             <div class="file-input__title">
@@ -499,7 +498,7 @@
                                 </div>
                                 <div class="info-group__fields">
                                     <div class="fg">
-                                        <input class="data-field" type="text" name="presintation-link"
+                                        <input class="data-field" value="" type="text" name="presintation-link"
                                             placeholder="Вставьте ссылку">
                                     </div>
                                 </div>
@@ -530,7 +529,7 @@
                                 </div>
                                 <div class="info-group__fields">
                                     <div class="fg">
-                                        <input class="data-field" type="text" name="video-link"
+                                        <input class="data-field" value="" type="text" name="video-link"
                                             placeholder="Вставьте ссылку">
                                     </div>
                                 </div>
@@ -603,7 +602,7 @@
                                 </div>
                                 <div class="info-group__fields">
                                     <div class="fg">
-                                        <input class="data-field" type="text" name="material-link"
+                                        <input class="data-field" value="" type="text" name="material-link"
                                             placeholder="Вставьте ссылку">
                                     </div>
                                 </div>
@@ -647,15 +646,16 @@
 
                         <div class="req-page__checks">
                             <div class="m-check">
-                                <input checked type="checkbox">
+                                <input checked type="checkbox" class="form-agree" name="personal-data-agree">
                                 <label>
                                     <span>
                                         Согласен на <a href="">обработку персональных данных</a>
                                     </span>
                                 </label>
+                                <div class="err-message">Необходимо солгласие</div>
                             </div>
                             <div class="m-check">
-                                <input checked type="checkbox">
+                                <input checked type="checkbox" class="form-agree" name="information-license">
                                 <label>
                                     <span>
                                         Разрешение на использование материалов, присланных в заявке, в информационных
@@ -663,6 +663,7 @@
                                         в продвижении премии и др.)
                                     </span>
                                 </label>
+                                <div class="err-message">Необходимо солгласие</div>
                             </div>
                         </div>
 
@@ -792,9 +793,18 @@
         </footer>
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/main.min.js"></script>
-    <script src="js/form-create.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/main.min.js"></script>
+    <script src="./js/quill.min.js"></script>
+    <script src="./js/imask.min.js"></script>
+    <script>
+        //ID номинации из query параметра
+        var nominationId = '1';
+        //ID пользователя
+        var userID = '1';
+    </script>
+
+    <script src="./js/form-create.js"></script>
 
 </body>
 

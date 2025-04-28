@@ -50,7 +50,7 @@
 }
 
 .req-page__btn {
-  flex: 0 0 50%;
+  flex: 0 0 calc(50% - 0.625em);
 }
 
 .ql-snow .ql-tooltip[data-mode="link"]::before {
@@ -81,4 +81,62 @@
 
 .ql-snow .ql-picker.ql-size {
   width: 110px;
+}
+
+.error-message {
+  font-size: 16px;
+  margin: 10px 0;
+  font-weight: 600;
+  color: red;
+  display: none;
+  text-align: right;
+}
+
+.error-message.show {
+  display: block;
+}
+
+.m-check.err label span {
+  color: red;
+}
+
+.file-input__inner {
+  pointer-events: none;
+}
+
+.dz-started .file-input__inner {
+  display: none;
+}
+
+.dz-started {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px;
+}
+
+.dz-preview {
+  border: 2px solid #ffdee8;
+  border-radius: 10px;
+  width: calc(33.33% - 10px);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+[data-dz-name] {
+  display: block;
+  word-break: break-all;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  line-height: 120%;
+}
+
+.dz-remove {
+  font-size: 12px;
+  font-weight: 600;
+  color: red;
+  display: block;
+  margin-top: auto;
+  padding-top: 10px;
 }
