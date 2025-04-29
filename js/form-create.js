@@ -83,22 +83,100 @@ customFormAgree.forEach(el => {
 
 
 
+// const dropzonesInits = document.querySelectorAll('[data-dropzone-item]');
+// dropzonesInits.forEach(item => {
+//     const acceptedFiles = item.getAttribute('data-accepted-files');
+//     const maxFilesCount = +item.getAttribute('data-max-files-count');
+//     const maxFilesSize = +item.getAttribute('data-max-total-size');
+//     const maxFilesSizeInBites = maxFilesSize * 1024 * 1024; // МБ в байтах
+
+
+//     let dropzoneInit = new Dropzone(item, {
+//         url: "/upload",        // URL загрузки файлов
+//         autoProcessQueue: false, // <== ОТКЛЮЧАЕМ авто-загрузку
+//         uploadMultiple: maxFilesCount > 1 ? true : false,   // <== Загружаем сразу несколько файлов
+//         parallelUploads: maxFilesCount, // до 3 файлов одновременно
+//         maxFiles: maxFilesCount,           // Лимит файлов
+//         addRemoveLinks: true, // Важно: включено добавление ссылки удаления
+//         dictRemoveFile: "Удалить файл", // <== Вот здесь свой текст!
+//         paramName: "files",
+//         acceptedFiles: acceptedFiles,
+//         previewTemplate: `
+//         <div class="dz-preview dz-file-preview">
+//             <div class="dz-details">
+//                 <div class="dz-filename"><span data-dz-name></span></div>
+//                 <div class="dz-size" data-dz-size></div>
+//             </div>
+//             <div class="dz-error-message"><span data-dz-errormessage></span></div>
+//         </div>
+//         `
+//     });
+
+
+//     dropzoneInit.on("addedfile", function (file) {
+//         // 1. Проверка на дубликаты
+//         let isDuplicate = false;
+//         dropzoneInit.files.forEach(function (existingFile) {
+//             if (
+//                 existingFile !== file && // не проверяем сам файл
+//                 existingFile.name === file.name &&  // если имя одинаковое
+//                 existingFile.size === file.size   // и размер тот же
+//             ) {
+//                 isDuplicate = true;
+//             }
+//         });
+
+//         if (isDuplicate) {
+//             dropzoneInit.removeFile(file);
+//             alert("Этот файл уже был загружен");
+//             return; // прекращаем выполнение, если дубликат
+//         }
+
+//         // 2. Проверка на общий размер всех файлов
+//         let totalSize = 0;
+//         dropzoneInit.files.forEach(function (f) {
+//             totalSize += f.size;
+//         });
+
+//         if (totalSize > maxFilesSizeInBites) {
+//             dropzoneInit.removeFile(file);
+//             alert(`Общий размер файлов не должен превышать ${maxFilesSize} МБ.`);
+//         }
+//     });
+
+//     dropzoneInit.on("maxfilesexceeded", function (file) {
+//         // 3. Проверка на количество файлов
+//         dropzoneInit.removeFile(file);
+//         alert(`Можно загрузить не более ${maxFilesCount} файлов.`);
+//     });
+
+//     dropzoneInit.on("error", function (file, message) {
+//         // 4. Обработка ошибок типов файлов
+//         if (message == "You can't upload files of this type.") {
+//             dropzoneInit.removeFile(file);
+//             alert("Неправильный формат файла.");
+//         }
+//     });
+// });
+const dropzonesInitsArray = [];
 const dropzonesInits = document.querySelectorAll('[data-dropzone-item]');
 dropzonesInits.forEach(item => {
     const acceptedFiles = item.getAttribute('data-accepted-files');
     const maxFilesCount = +item.getAttribute('data-max-files-count');
     const maxFilesSize = +item.getAttribute('data-max-total-size');
-    const maxFilesSizeInBites = maxFilesSize * 1024 * 1024; // МБ в байтах
+    const maxFilesSizeInBytes = maxFilesSize * 1024 * 1024; // МБ в байтах
 
+    const uploadedFiles = JSON.parse(item.getAttribute('data-uploaded-files') || '[]');
 
+    let existingFiles = []; // загруженные на сервере файлы
     let dropzoneInit = new Dropzone(item, {
-        url: "/upload",        // URL загрузки файлов
-        autoProcessQueue: false, // <== ОТКЛЮЧАЕМ авто-загрузку
-        uploadMultiple: maxFilesCount > 1 ? true : false,   // <== Загружаем сразу несколько файлов
-        parallelUploads: maxFilesCount, // до 3 файлов одновременно
-        maxFiles: maxFilesCount,           // Лимит файлов
-        addRemoveLinks: true, // Важно: включено добавление ссылки удаления
-        dictRemoveFile: "Удалить файл", // <== Вот здесь свой текст!
+        url: "/upload",
+        autoProcessQueue: false,
+        uploadMultiple: maxFilesCount > 1,
+        parallelUploads: maxFilesCount,
+        maxFiles: maxFilesCount,
+        addRemoveLinks: true,
+        dictRemoveFile: "Удалить файл",
         paramName: "files",
         acceptedFiles: acceptedFiles,
         previewTemplate: `
@@ -113,51 +191,115 @@ dropzonesInits.forEach(item => {
     });
 
 
+    //  Добавляем уже загруженные файлы
+    if (uploadedFiles.length > 0) {
+        uploadedFiles.forEach(fileData => {
+            let mockFile = {
+                name: fileData.name,
+                size: fileData.size,
+                accepted: true
+            };
+
+            dropzoneInit.emit("addedfile", mockFile);
+            dropzoneInit.emit("thumbnail", mockFile, fileData.url);
+            dropzoneInit.emit("complete", mockFile);
+
+            mockFile.serverId = fileData.id || null;
+            existingFiles.push(mockFile);
+        });
+    }
+    dropzoneInit.existingFiles = existingFiles;
+
+    // Функция подсчёта общего размера всех файлов
+    function getTotalSize() {
+        let size = 0;
+        existingFiles.forEach(file => size += file.size);
+        dropzoneInit.files.forEach(file => size += file.size);
+        return size;
+    }
+
+    // Функция подсчёта общего количества файлов
+    function getTotalFilesCount() {
+        return existingFiles.length + dropzoneInit.files.length;
+    }
+
     dropzoneInit.on("addedfile", function (file) {
-        // 1. Проверка на дубликаты
+        // Проверка на дубликаты
         let isDuplicate = false;
-        dropzoneInit.files.forEach(function (existingFile) {
-            if (
-                existingFile !== file && // не проверяем сам файл
-                existingFile.name === file.name &&  // если имя одинаковое
-                existingFile.size === file.size   // и размер тот же
-            ) {
+
+        // среди уже загруженных файлов
+        existingFiles.forEach(existingFile => {
+            if (existingFile.name === file.name && existingFile.size === file.size) {
+                isDuplicate = true;
+            }
+        });
+
+        // среди файлов в очереди
+        dropzoneInit.files.forEach(existingFile => {
+            if (existingFile !== file && existingFile.name === file.name && existingFile.size === file.size) {
                 isDuplicate = true;
             }
         });
 
         if (isDuplicate) {
             dropzoneInit.removeFile(file);
-            alert("Этот файл уже был загружен");
-            return; // прекращаем выполнение, если дубликат
+            alert("Этот файл уже был загружен.");
+            return;
         }
 
-        // 2. Проверка на общий размер всех файлов
-        let totalSize = 0;
-        dropzoneInit.files.forEach(function (f) {
-            totalSize += f.size;
-        });
+        // Проверка на количество файлов
+        if (getTotalFilesCount() > maxFilesCount) {
+            dropzoneInit.removeFile(file);
+            alert(`Можно загрузить не более ${maxFilesCount} файлов.`);
+            return;
+        }
 
-        if (totalSize > maxFilesSizeInBites) {
+        // Проверка на общий размер файлов
+        if (getTotalSize() > maxFilesSizeInBytes) {
             dropzoneInit.removeFile(file);
             alert(`Общий размер файлов не должен превышать ${maxFilesSize} МБ.`);
+            return;
         }
     });
 
     dropzoneInit.on("maxfilesexceeded", function (file) {
-        // 3. Проверка на количество файлов
         dropzoneInit.removeFile(file);
         alert(`Можно загрузить не более ${maxFilesCount} файлов.`);
     });
 
     dropzoneInit.on("error", function (file, message) {
-        // 4. Обработка ошибок типов файлов
-        if (message == "You can't upload files of this type.") {
+        if (message === "You can't upload files of this type.") {
             dropzoneInit.removeFile(file);
             alert("Неправильный формат файла.");
         }
     });
+
+    dropzoneInit.on("removedfile", function (file) {
+        if (file.serverId) {
+            // Удаляем старый файл из existingFiles
+            existingFiles = existingFiles.filter(f => f !== file);
+            console.log(`Файл с id ${file.serverId} будет удалён с сервера`);
+            dropzoneInit.existingFiles = existingFiles;
+        } else {
+            console.log(`Файл "${file.name}" удалён из очереди`);
+        }
+
+        setTimeout(() => {
+            const totalFilesCount = existingFiles.length + dropzoneInit.files.length;
+
+            if (totalFilesCount === 0) {
+                dropzoneInit.element.classList.remove('dz-started');
+            } else {
+                dropzoneInit.element.classList.add('dz-started');
+            }
+        }, 10); //
+    });
+
+    dropzonesInitsArray.push({
+        zoneInit: dropzoneInit
+    });
 });
+
 
 
 document.addEventListener('click', (e) => {
@@ -165,6 +307,7 @@ document.addEventListener('click', (e) => {
     if (target.closest('#submit-request')) {
         e.preventDefault();
         customFormAgree.forEach(el => !el.checked && el.closest('.m-check').classList.add('err'))
+        console.log(dropzonesInitsArray);
 
         // Проверяем редакторы на наличе контента
         editorsData.forEach(editor => {

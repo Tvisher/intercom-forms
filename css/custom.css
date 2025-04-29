@@ -116,6 +116,7 @@
 }
 
 .dz-preview {
+  cursor: default;
   border: 2px solid #ffdee8;
   border-radius: 10px;
   width: calc(33.33% - 10px);
@@ -139,4 +140,11 @@
   display: block;
   margin-top: auto;
   padding-top: 10px;
+}
+
+.last-uploaded-files {
+}
+
+.file-input__wrap {
+  cursor: pointer;
 }
