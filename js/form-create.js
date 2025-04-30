@@ -3,12 +3,8 @@ const toolbarOptions = [
     ["blockquote"],
     ["link"],
     [{ list: "ordered" }, { list: "bullet" }],
-    [{ align: [] }],
-    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    ["clean"], // remove formatting button
+    ["clean"],
 ];
-const maxChars = 2000;
 
 
 const editorsData = [];
@@ -16,6 +12,7 @@ const editorWrappers = document.querySelectorAll('.editor-wrapper');
 editorWrappers.forEach(editorWrapper => {
     const editorHtmlElement = editorWrapper.querySelector('.editor-component');
     const editorCharCount = editorWrapper.querySelector('.charCount');
+    const maxChars = editorHtmlElement.getAttribute('data-max-chars');
     const editorItem = new Quill(editorHtmlElement, {
         modules: {
             toolbar: toolbarOptions,
@@ -23,6 +20,8 @@ editorWrappers.forEach(editorWrapper => {
         theme: "snow",
     });
     editorsData.push(editorItem);
+
+    // Ограничиваем колличество контента в редакторе
     editorItem.on("text-change", function (delta, oldDelta, source) {
         editorWrapper.classList.remove('err');
         let text = editorItem.getText();
@@ -34,9 +33,18 @@ editorWrappers.forEach(editorWrapper => {
             editorItem.deleteText(maxChars, editorItem.getLength(), "silent");
         }
     });
+    // Ограничиваем вставку контента в редактор только текстом
+    editorItem.root.addEventListener('paste', function (e) {
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+        const selection = editorItem.getSelection();
+        const position = selection ? selection.index : 0;
+        editorItem.insertText(position, text);
+    });
+
 });
 
-
+// Добавляем маску на поля type="tel"
 const telInputs = document.querySelectorAll('input[type="tel"]');
 telInputs.forEach(telInput => {
     IMask(
@@ -46,7 +54,7 @@ telInputs.forEach(telInput => {
         }
     )
 });
-
+// Добавляем маску на поля data-field-type="number"
 const numberInputs = document.querySelectorAll('[data-field-type="number"]');
 numberInputs.forEach(numberInput => {
     IMask(
@@ -58,7 +66,7 @@ numberInputs.forEach(numberInput => {
         });
 });
 
-// Обработчик сьроса ошибки с поля
+// Обработчик сброса ошибки с полей
 const dataDields = document.querySelectorAll('.data-field');
 dataDields.forEach(field => {
     field.addEventListener('input', () => {
@@ -66,12 +74,12 @@ dataDields.forEach(field => {
     })
 });
 
-
+// Функция проверки значения поля на тип email
 function isValidEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
 }
-
+// Сброс ошибок с полей согласия
 const customFormAgree = document.querySelectorAll('.form-agree');
 customFormAgree.forEach(el => {
     el.addEventListener('change', () => {
@@ -79,7 +87,7 @@ customFormAgree.forEach(el => {
     })
 });
 
-// Dropzone.autoDiscover = false;
+
 
 
 
@@ -158,6 +166,8 @@ customFormAgree.forEach(el => {
 //         }
 //     });
 // });
+
+// Инит зон для подгрузки файлов.
 const dropzonesInitsArray = [];
 const dropzonesInits = document.querySelectorAll('[data-dropzone-item]');
 dropzonesInits.forEach(item => {
@@ -306,8 +316,8 @@ document.addEventListener('click', (e) => {
     const target = e.target;
     if (target.closest('#submit-request')) {
         e.preventDefault();
+        // Проверка полей согласия обработки персональных данных 
         customFormAgree.forEach(el => !el.checked && el.closest('.m-check').classList.add('err'))
-        console.log(dropzonesInitsArray);
 
         // Проверяем редакторы на наличе контента
         editorsData.forEach(editor => {
@@ -318,7 +328,7 @@ document.addEventListener('click', (e) => {
                 editor.container.closest('.editor-wrapper').classList.add('err')
             }
         });
-        // Валидация полей
+        // Валидация полей согласно их типу
         const dataFields = document.querySelectorAll('.data-field');
         dataFields.forEach(field => {
 
@@ -340,6 +350,7 @@ document.addEventListener('click', (e) => {
         const errField = document.querySelector('.err');
         if (errField) {
             errField.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
         }
     }
 });

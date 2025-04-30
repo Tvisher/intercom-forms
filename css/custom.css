@@ -142,7 +142,12 @@
   padding-top: 10px;
 }
 
-.last-uploaded-files {
+.ql-container {
+  font-size: 16px;
+}
+
+.ql-container * {
+  line-height: 120%;
 }
 
 .file-input__wrap {
