@@ -8,10 +8,9 @@
     <meta name="keywords" content="" />
     <meta name="color-scheme" content="light only" />
     <link rel="stylesheet" href="./css/quill.snow.css" />
-    <link rel="stylesheet" href="css/style.min.css" />
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="./css/style.min.css" />
+    <link rel="stylesheet" href="./css/dropzone.min.css" type="text/css" />
+    <link rel="stylesheet" href="./css/custom.css" />
     <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
     <title>Новая заявка</title>
 </head>
@@ -48,7 +47,6 @@
                             <span>Ирина</span>
                         </a>
                         <a href="" class="header-user__img avatar">
-                            <img src="img/avatar.webp" alt="" />
                         </a>
                     </div>
                 </div>
@@ -485,12 +483,6 @@
                                     </div>
                                 </div>
                                 <div class="upload-files-container">
-                                    <!-- <div class="last-uploaded-files">
-                                        <h2 class="text18">Ранее загруженные файлы:</h2>
-                                        <ul>
-                                            <li></li>
-                                        </ul>
-                                    </div> -->
                                     <div class="file-input">
                                         <div class="file-input__wrap" data-dropzone-item data-accepted-files=".pdf"
                                             data-max-files-count="3" data-max-total-size="3" data-uploaded-files='[
@@ -604,13 +596,16 @@
                                     </div>
                                 </div>
 
-                                <div class="file-input">
-                                    <input type="file" />
-                                    <div class="file-input__wrap">
-                                        <div class="file-input__inner">
-                                            <img src="img/upload.svg" alt="" class="file-input__img" />
-                                            <div class="file-input__title">
-                                                Нажмите, чтобы выбрать файл или перетащите его в окно
+                                <div class="upload-files-container">
+                                    <div class="file-input">
+                                        <div class="file-input__wrap" data-dropzone-item
+                                            data-accepted-files=".pdf,.doc,.docx,.rtf,.odt,.jpg,.jpeg,.png,.gif,.bmp,.webp,.svg,.heic,.mp4,.mov,.avi,.webm,.mkv,.m4v"
+                                            data-max-files-count="99" data-max-total-size="50" data-uploaded-files='[]'>
+                                            <div class="file-input__inner">
+                                                <img src="img/upload.svg" alt="" class="file-input__img" />
+                                                <div class="file-input__title">
+                                                    Нажмите, чтобы выбрать файл или перетащите его в окно
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -661,13 +656,16 @@
                                     </div>
                                 </div>
 
-                                <div class="file-input">
-                                    <input type="file" />
-                                    <div class="file-input__wrap">
-                                        <div class="file-input__inner">
-                                            <img src="img/upload.svg" alt="" class="file-input__img" />
-                                            <div class="file-input__title">
-                                                Нажмите, чтобы выбрать файл или перетащите его в окно
+                                <div class="upload-files-container">
+                                    <div class="file-input">
+                                        <div class="file-input__wrap" data-dropzone-item
+                                            data-accepted-files=".pdf,.doc,.docx" data-max-files-count="1"
+                                            data-max-total-size="50" data-uploaded-files='[]'>
+                                            <div class="file-input__inner">
+                                                <img src="img/upload.svg" alt="" class="file-input__img" />
+                                                <div class="file-input__title">
+                                                    Нажмите, чтобы выбрать файл или перетащите его в окно
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -719,9 +717,6 @@
                         </div>
 
                         <div class="manager">
-                            <div class="manager__img avatar">
-                                <img src="img/manager.webp" alt="" />
-                            </div>
                             <div class="manager__content">
                                 <div class="h4">
                                     Если у вас возникли вопросы, свяжитесь с менеджером по
@@ -834,6 +829,7 @@
     </div>
 
     <script src="./js/jquery.min.js"></script>
+    <script src="./js/dropzone.min.js"></script>
     <script src="./js/main.min.js"></script>
     <script src="./js/quill.min.js"></script>
     <script src="./js/imask.min.js"></script>
